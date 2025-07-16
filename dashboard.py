@@ -1,4 +1,3 @@
-
 import streamlit as st
 import json
 import pandas as pd
@@ -49,29 +48,39 @@ st.dataframe(pd.DataFrame.from_dict(asset_details['issues'], orient='index', col
 st.markdown("### ⚠️ Severity Distribution")
 st.dataframe(pd.DataFrame.from_dict(asset_details['severity_count'], orient='index', columns=['Count']).reset_index().rename(columns={'index': 'Severity Level'}))
 
+# Visualization: Frequent Asset Usage Over Time
 st.markdown("### 📈 Frequent Asset Usage Over Time")
-raw_data['date'] = pd.to_datetime(raw_data['date'], errors='coerce')
-raw_data['Month'] = raw_data['date'].dt.to_period('M')
-usage_trend = raw_data.groupby(['Month', 'Asset ID']).size().reset_index(name='Work Orders')
+if 'date' in raw_data.columns:
+    raw_data['date'] = pd.to_datetime(raw_data['date'], errors='coerce')
+    raw_data['Month'] = raw_data['date'].dt.to_period('M')
+    usage_trend = raw_data.groupby(['Month', 'Asset ID']).size().reset_index(name='Work Orders')
 
-plt.figure(figsize=(12,6))
-sns.lineplot(data=usage_trend, x='Month', y='Work Orders', hue='Asset ID', marker='o')
-plt.xticks(rotation=45)
-plt.title('Monthly Work Orders per Asset')
-plt.tight_layout()
-st.pyplot(plt)
+    plt.figure(figsize=(12,6))
+    sns.lineplot(data=usage_trend, x='Month', y='Work Orders', hue='Asset ID', marker='o')
+    plt.xticks(rotation=45)
+    plt.title('Monthly Work Orders per Asset')
+    plt.tight_layout()
+    st.pyplot(plt)
+else:
+    st.warning("⚠️ Date column not found in data. Skipping usage trend visualization.")
 
+# Visualization: Most Common Failures in Past Month
 st.markdown("### 🔧 Most Common Failures in the Past Month")
-latest_month = raw_data['Month'].max()
-past_month_data = raw_data[raw_data['Month'] == latest_month]
-common_failures = past_month_data['failure_mode'].value_counts().head(5)
+if 'date' in raw_data.columns:
+    latest_month = raw_data['date'].dt.to_period('M').max()
+    raw_data['Month'] = raw_data['date'].dt.to_period('M')
+    past_month_data = raw_data[raw_data['Month'] == latest_month]
+    common_failures = past_month_data['failure_mode'].value_counts().head(5)
 
-fig, ax = plt.subplots()
-common_failures.plot(kind='bar', ax=ax)
-ax.set_title(f'Most Common Failures in {latest_month}')
-ax.set_ylabel('Frequency')
-st.pyplot(fig)
+    fig, ax = plt.subplots()
+    common_failures.plot(kind='bar', ax=ax)
+    ax.set_title(f'Most Common Failures in {latest_month}')
+    ax.set_ylabel('Frequency')
+    st.pyplot(fig)
+else:
+    st.warning("⚠️ Date column not found. Skipping common failures for the past month visualization.")
 
+# Visualization: Most Problematic Assets Overall
 st.markdown("### 🚨 Most Problematic Assets Overall")
 problematic_assets = raw_data['Asset ID'].value_counts().head(5)
 fig2, ax2 = plt.subplots()
