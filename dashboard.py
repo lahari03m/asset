@@ -66,7 +66,7 @@ if asset_column in raw_data.columns:
     plt.tight_layout()
     st.pyplot(plt)
 else:
-    st.warning(f"⚠️ '{asset_column}' column not found in data. Skipping visualization.")
+    st.warning(f"")
 
 
 # Visualization: Most Common Failures
