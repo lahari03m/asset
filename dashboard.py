@@ -49,8 +49,14 @@ st.dataframe(pd.DataFrame.from_dict(asset_details['severity_count'], orient='ind
 
 # Visualization: Work Orders per Asset
 st.markdown("### 📊 Total Work Orders per Asset")
-if 'Asset ID' in raw_data.columns:
-    asset_counts = raw_data['Asset ID'].value_counts().reset_index()
+
+# Debug: Print available columns
+st.write("Available columns:", raw_data.columns.tolist())
+
+asset_column = 'Asset ID'  # Replace with actual column name if different
+
+if asset_column in raw_data.columns:
+    asset_counts = raw_data[asset_column].value_counts().reset_index()
     asset_counts.columns = ['Asset ID', 'Work Orders']
 
     plt.figure(figsize=(12,6))
@@ -60,7 +66,8 @@ if 'Asset ID' in raw_data.columns:
     plt.tight_layout()
     st.pyplot(plt)
 else:
-    st.warning("⚠️ 'Asset ID' column not found in data. Skipping visualization.")
+    st.warning(f"⚠️ '{asset_column}' column not found in data. Skipping visualization.")
+
 
 # Visualization: Most Common Failures
 st.markdown("### 🔧 Most Common Failures Overall")
