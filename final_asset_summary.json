@@ -1,0 +1,174 @@
+{
+    "PUMP-001": {
+        "total_work_orders": 20,
+        "issues": {
+            "nan - Scheduled maintenance": 5,
+            "Cavitation - Operating stress": 4,
+            "Vibration - Operating stress": 2,
+            "Seal Leak - Normal wear and tear": 1,
+            "Impeller Wear - Normal wear and tear": 1,
+            "Bearing Failure - Insufficient lubrication": 4,
+            "Impeller Wear - Operating stress": 1,
+            "Bearing Failure - Progressive wear": 1,
+            "Bearing Wear - Normal wear and tear": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "MOTOR-012": {
+        "total_work_orders": 20,
+        "issues": {
+            "Insulation Breakdown - Environmental conditions": 2,
+            "Bearing Wear - Insufficient lubrication": 1,
+            "Insulation Breakdown - Age-related degradation": 1,
+            "nan - Scheduled maintenance": 5,
+            "Bearing Wear - Normal wear and tear": 2,
+            "Shaft Misalignment - Normal wear and tear": 3,
+            "Winding Failure - Operating stress": 3,
+            "Overheating - Environmental conditions": 1,
+            "Winding Failure - Age-related degradation": 2
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "CONV-005": {
+        "total_work_orders": 20,
+        "issues": {
+            "nan - Scheduled maintenance": 8,
+            "Bearing Failure - Normal wear and tear": 3,
+            "Roller Seizure - Operating stress": 3,
+            "Motor Overload - Operating stress": 1,
+            "Bearing Failure - Environmental conditions": 1,
+            "Alignment Issues - Environmental conditions": 3,
+            "Belt Failure - Operating stress": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "COMP-002": {
+        "total_work_orders": 20,
+        "issues": {
+            "Piston Wear - Normal wear and tear": 2,
+            "Pressure Loss - Operating stress": 1,
+            "Valve Failure - Progressive wear": 1,
+            "Valve Failure - Operating stress": 2,
+            "nan - Scheduled maintenance": 9,
+            "Oil Contamination - Environmental conditions": 2,
+            "Pressure Loss - Environmental conditions": 2,
+            "Valve Failure - Normal wear and tear": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "FAN-003": {
+        "total_work_orders": 20,
+        "issues": {
+            "Vibration - Operating stress": 3,
+            "Belt Wear - Normal wear and tear": 3,
+            "Motor Issues - Progressive wear": 1,
+            "nan - Scheduled maintenance": 5,
+            "Motor Issues - Environmental conditions": 3,
+            "Blade Damage - Environmental conditions": 1,
+            "Motor Issues - Operating stress": 3,
+            "Belt Wear - Progressive wear": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "PUMP-007": {
+        "total_work_orders": 20,
+        "issues": {
+            "nan - Scheduled maintenance": 8,
+            "Contamination - Progressive wear": 2,
+            "Gear Wear - Progressive wear": 3,
+            "Seal Failure - Operating stress": 1,
+            "Seal Failure - Progressive wear": 3,
+            "Contamination - Environmental conditions": 1,
+            "Pressure Drop - Insufficient lubrication": 1,
+            "Gear Wear - Environmental conditions": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "MOTOR-025": {
+        "total_work_orders": 20,
+        "issues": {
+            "Encoder Failure - Age-related degradation": 2,
+            "Overheating - Environmental conditions": 1,
+            "nan - Scheduled maintenance": 10,
+            "Overheating - Age-related degradation": 2,
+            "Drive Issues - Age-related degradation": 2,
+            "Position Error - Normal wear and tear": 1,
+            "Drive Issues - Operating stress": 1,
+            "Position Error - Age-related degradation": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "VALVE-008": {
+        "total_work_orders": 20,
+        "issues": {
+            "Calibration Drift - Operating stress": 2,
+            "nan - Scheduled maintenance": 6,
+            "Seal Leak - Progressive wear": 1,
+            "Sticking - Normal wear and tear": 2,
+            "Corrosion - Environmental conditions": 3,
+            "Actuator Failure - Normal wear and tear": 1,
+            "Seal Leak - Operating stress": 4,
+            "Calibration Drift - Progressive wear": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "HEAT-001": {
+        "total_work_orders": 20,
+        "issues": {
+            "nan - Scheduled maintenance": 6,
+            "Tube Leak - Operating stress": 1,
+            "Thermal Stress - Environmental conditions": 3,
+            "Fouling - Environmental conditions": 4,
+            "Corrosion - Environmental conditions": 2,
+            "Tube Leak - Environmental conditions": 3,
+            "Gasket Failure - Normal wear and tear": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    },
+    "TURB-004": {
+        "total_work_orders": 20,
+        "issues": {
+            "Oil System Issues - Normal wear and tear": 3,
+            "Bearing Failure - Insufficient lubrication": 1,
+            "Bearing Failure - Progressive wear": 1,
+            "Blade Wear - Operating stress": 1,
+            "nan - Scheduled maintenance": 8,
+            "Oil System Issues - Environmental conditions": 1,
+            "Vibration - Operating stress": 2,
+            "Control Problems - Operating stress": 1,
+            "Oil System Issues - Progressive wear": 1,
+            "Vibration - Progressive wear": 1
+        },
+        "severity_count": {
+            "Low": 20
+        },
+        "average_predicted_days_to_failure": 60.0
+    }
+}
