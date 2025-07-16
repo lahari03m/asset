@@ -55,4 +55,25 @@ fig_severity = px.pie(severity_df, names='Severity Level', values='Count',
                       color_discrete_sequence=px.colors.sequential.RdBu)
 st.plotly_chart(fig_severity, use_container_width=True)
 
+# ---- Additional: Top Issues Across All Assets (Excluding Scheduled Maintenance) ----
+st.markdown("### 🚨 Top Issues Across All Assets (Excluding Scheduled Maintenance)")
+
+# Aggregate issues across all assets
+issue_records = []
+for asset, details in summary_data.items():
+    for issue, count in details['issues'].items():
+        if not issue.startswith("nan"):
+            issue_records.append({'Asset ID': asset, 'Issue': issue, 'Count': count})
+
+issues_df = pd.DataFrame(issue_records)
+total_issue_counts = issues_df.groupby('Issue')['Count'].sum().reset_index().sort_values(by='Count', ascending=False)
+
+# Plot with Plotly
+import plotly.express as px
+fig_total_issues = px.bar(total_issue_counts, x='Count', y='Issue', orientation='h',
+                          title='Total Issue Frequency Across All Assets',
+                          color='Count', color_continuous_scale='Viridis')
+st.plotly_chart(fig_total_issues, use_container_width=True)
+
+
 st.success("✅ Dashboard rendered successfully.")
