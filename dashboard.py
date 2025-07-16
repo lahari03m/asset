@@ -1,86 +1,58 @@
 import streamlit as st
 import json
 import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
+import plotly.express as px
 
 FINAL_SUMMARY_PATH = 'final_asset_summary.json'
-RAW_DATA_PATH = 'sample_data.csv'
 
+# Load Final Summary JSON
+@st.cache_data
 def load_final_summary():
     with open(FINAL_SUMMARY_PATH, 'r') as f:
-        data = json.load(f)
-    return data
+        return json.load(f)
 
-def load_raw_data():
-    return pd.read_csv(RAW_DATA_PATH)
-
-st.set_page_config(page_title="🚀 Comprehensive Asset Maintenance Dashboard", layout="wide")
-st.title("🚀 Comprehensive Asset Maintenance Dashboard")
+# App Configuration
+st.set_page_config(page_title="🔧 Asset Maintenance Summary Dashboard", layout="wide")
+st.title("🔧 Comprehensive Asset Maintenance Summary")
 
 summary_data = load_final_summary()
-raw_data = load_raw_data()
-
 asset_ids = list(summary_data.keys())
 selected_asset = st.sidebar.selectbox('Select Asset ID:', asset_ids)
+
 asset_details = summary_data[selected_asset]
 
-st.header(f"Summary for Asset ID: {selected_asset}")
+st.header(f"📊 Summary for Asset ID: {selected_asset}")
 
+# KPIs
 col1, col2 = st.columns(2)
 col1.metric("Total Work Orders", asset_details['total_work_orders'])
-col2.metric("Avg. Predicted Days to Failure", round(asset_details['average_predicted_days_to_failure'], 2))
+col2.metric("Average Predicted Days to Failure", asset_details['average_predicted_days_to_failure'])
 
-st.markdown("### 🔍 Asset Summary Paragraph")
+# Summary Paragraph
+st.markdown("### 📝 Asset Performance Summary")
 most_common_issue = max(asset_details['issues'], key=asset_details['issues'].get)
-most_severe = max(asset_details['severity_count'], key=asset_details['severity_count'].get)
 summary_paragraph = (
-    f"Asset {selected_asset} has a total of {asset_details['total_work_orders']} work orders. "
-    f"The most common issue is '{most_common_issue}', and the prevailing severity level is '{most_severe}'. "
-    f"The average predicted days to failure is approximately {round(asset_details['average_predicted_days_to_failure'], 2)} days."
+    f"The asset **{selected_asset}** has undergone **{asset_details['total_work_orders']}** maintenance work orders. "
+    f"The most commonly observed issue is '**{most_common_issue}**'. "
+    f"All identified issues have been of '**{list(asset_details['severity_count'].keys())[0]}**' severity. "
+    f"The asset is predicted to function for an average of **{asset_details['average_predicted_days_to_failure']} days** before potential failure."
 )
 st.info(summary_paragraph)
 
-st.markdown("### 📋 Issues Summary")
-st.dataframe(pd.DataFrame.from_dict(asset_details['issues'], orient='index', columns=['Count']).reset_index().rename(columns={'index': 'Issue Description'}))
+# Issues Breakdown
+st.markdown("### 🔍 Issue Distribution")
+issues_df = pd.DataFrame(list(asset_details['issues'].items()), columns=['Issue Description', 'Count'])
+fig_issues = px.bar(issues_df, x='Count', y='Issue Description', orientation='h',
+                    title=f"Issues Frequency for {selected_asset}",
+                    color='Count', color_continuous_scale='Blues')
+st.plotly_chart(fig_issues, use_container_width=True)
 
+# Severity Breakdown
 st.markdown("### ⚠️ Severity Distribution")
-st.dataframe(pd.DataFrame.from_dict(asset_details['severity_count'], orient='index', columns=['Count']).reset_index().rename(columns={'index': 'Severity Level'}))
+severity_df = pd.DataFrame(list(asset_details['severity_count'].items()), columns=['Severity Level', 'Count'])
+fig_severity = px.pie(severity_df, names='Severity Level', values='Count', 
+                      title=f"Severity Levels for {selected_asset}",
+                      color_discrete_sequence=px.colors.sequential.RdBu)
+st.plotly_chart(fig_severity, use_container_width=True)
 
-# Visualization: Work Orders per Asset
-st.markdown("### 📊 Total Work Orders per Asset")
-
-# Debug: Print available columns
-st.write("Available columns:", raw_data.columns.tolist())
-
-asset_column = 'Asset ID'  # Replace with actual column name if different
-
-if asset_column in raw_data.columns:
-    asset_counts = raw_data[asset_column].value_counts().reset_index()
-    asset_counts.columns = ['Asset ID', 'Work Orders']
-
-    plt.figure(figsize=(12,6))
-    sns.barplot(data=asset_counts, x='Asset ID', y='Work Orders', palette='viridis')
-    plt.title('Total Work Orders per Asset')
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    st.pyplot(plt)
-else:
-    st.warning(f"")
-
-
-# Visualization: Most Common Failures
-st.markdown("### 🔧 Most Common Failures Overall")
-if 'failure_mode' in raw_data.columns:
-    common_failures = raw_data['failure_mode'].value_counts().head(5)
-
-    fig, ax = plt.subplots()
-    common_failures.plot(kind='bar', ax=ax, color='skyblue')
-    ax.set_title('Top 5 Most Common Failures Overall')
-    ax.set_ylabel('Frequency')
-    plt.tight_layout()
-    st.pyplot(fig)
-else:
-    st.warning("⚠️ 'failure_mode' column not found. Skipping common failures visualization.")
-
-st.success("✅ Dashboard loaded successfully.")
+st.success("✅ Dashboard rendered successfully.")
